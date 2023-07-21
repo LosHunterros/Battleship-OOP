@@ -78,11 +78,29 @@
                 colors[0 + 2 + (153 * (7 + (crosshair_y * 2))) + (63 - 1) + (crosshair_x * 4)] = ConsoleColor.Red;
                 colors[0 + 2 + (153 * (7 + (crosshair_y * 2))) + (64 - 1) + (crosshair_x * 4)] = ConsoleColor.Red;
 
+                List<string> displayPart = new List<string>();
+                List<ConsoleColor> displayPartColor = new List<ConsoleColor>();
+
+                displayPart.Add("");
+                displayPartColor.Add(colors[0]);
+
                 Console.Clear();
+                int j = 0;
                 for (int i = 0; i < board.Length; i++)
                 {
-                    if (i > 0 && colors[i] != colors[i - 1]) Console.ForegroundColor = colors[i];
-                    Console.Write(board[i]);
+                    if (i > 0 && colors[i] != colors[i - 1])
+                    {
+                        j++;
+                        displayPart.Add("");
+                        displayPartColor.Add(colors[i]);
+                    }
+                displayPart[j] += board[i];
+                }
+
+                for (int i = 0; i < displayPart.Count; i++)
+                {
+                    Console.ForegroundColor = displayPartColor[i];
+                    Console.Write(displayPart[i]);
                 }
 
             }
