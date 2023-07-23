@@ -8,5 +8,6 @@ namespace Battleship
 {
     internal class Player
     {
+        public Player Opponent { get; set; }
     }
 }

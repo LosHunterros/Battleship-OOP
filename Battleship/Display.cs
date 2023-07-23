@@ -8,9 +8,11 @@ namespace Battleship
 {
     internal class Display
     {
+        public static Player Player1 { get; set; }
+        public static Player Player2 { get; set; }
         static int Crosshair_x = 0;
         static int Crosshair_y = 0;
-        public static void Write()
+        public static void Write(Player playerActive)
         {
             Console.OutputEncoding = System.Text.Encoding.Unicode;
             string board = @"
