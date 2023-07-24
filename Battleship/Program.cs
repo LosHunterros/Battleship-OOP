@@ -17,4 +17,18 @@
             Display.Write(PlayerActive);
         }
     }
+
+    enum TextAlign
+    {
+        Left,
+        Center,
+        Right,
+    }
+    enum ShipPartState
+    {
+        Temporary,
+        Ok,
+        Hit,
+        Sunk,
+    }
 }
