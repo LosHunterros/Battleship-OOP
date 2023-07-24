@@ -12,7 +12,7 @@ namespace Battleship
         private char[,] opponentBoard = new char[Config.BoardSize, Config.BoardSize];
         private List<Ship> ships = new List<Ship>();
 
-        public required Player Opponent { get; set; }
+        public Player Opponent { get; set; }
 
         public bool IsAlive => ships.Count > 0;
 
