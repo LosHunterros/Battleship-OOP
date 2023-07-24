@@ -24,7 +24,7 @@
         Center,
         Right,
     }
-    enum ShipPartState
+    enum ShipState
     {
         Temporary,
         Ok,
