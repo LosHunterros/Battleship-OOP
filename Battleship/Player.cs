@@ -8,9 +8,8 @@ namespace Battleship
 {
     internal class Player
     {
-        private const int BoardSize = 10;
-        private char[,] ownBoard = new char[BoardSize, BoardSize];
-        private char[,] opponentBoard = new char[BoardSize, BoardSize];
+        private char[,] ownBoard = new char[Config.BoardSize, Config.BoardSize];
+        private char[,] opponentBoard = new char[Config.BoardSize, Config.BoardSize];
         private List<Ship> ships = new List<Ship>();
 
         public required Player Opponent { get; set; }
@@ -35,12 +34,12 @@ namespace Battleship
             do
             {
                 Console.Write("Enter X coordinate (0-9): ");
-            } while (!int.TryParse(Console.ReadLine(), out x) || x < 0 || x >= BoardSize);
+            } while (!int.TryParse(Console.ReadLine(), out x) || x < 0 || x >= Config.BoardSize);
 
             do
             {
                 Console.Write("Enter Y coordinate (0-9): ");
-            } while (!int.TryParse(Console.ReadLine(), out y) || y < 0 || y >= BoardSize);
+            } while (!int.TryParse(Console.ReadLine(), out y) || y < 0 || y >= Config.BoardSize);
 
             
             if (ownBoard[x, y] != '\0')
@@ -62,12 +61,12 @@ namespace Battleship
             do
             {
                 Console.Write("Enter X coordinate to fire at (0-9): ");
-            } while (!int.TryParse(Console.ReadLine(), out x) || x < 0 || x >= BoardSize);
+            } while (!int.TryParse(Console.ReadLine(), out x) || x < 0 || x >= Config.BoardSize);
 
             do
             {
                 Console.Write("Enter Y coordinate to fire at (0-9): ");
-            } while (!int.TryParse(Console.ReadLine(), out y) || y < 0 || y >= BoardSize);
+            } while (!int.TryParse(Console.ReadLine(), out y) || y < 0 || y >= Config.BoardSize);
 
             
             if (opponentBoard[x, y] != '\0')
@@ -147,9 +146,9 @@ namespace Battleship
         public void PrintOwnBoard()
         {
             Console.WriteLine("Player's own board:");
-            for (int i = 0; i < BoardSize; i++)
+            for (int i = 0; i < Config.BoardSize; i++)
             {
-                for (int j = 0; j < BoardSize; j++)
+                for (int j = 0; j < Config.BoardSize; j++)
                 {
                     Console.Write(ownBoard[i, j] + " ");
                 }
