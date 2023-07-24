@@ -12,7 +12,7 @@ namespace Battleship
         public static Player Player2 { get; set; }
         static int Crosshair_x = 0;
         static int Crosshair_y = 0;
-        public static string[] messages = new string[18];
+        public static string[] Messages = new string[18];
         public static void Write(Player playerActive)
         {
             Console.OutputEncoding = System.Text.Encoding.Unicode;
@@ -24,24 +24,24 @@ namespace Battleship
 █       █ █ █▄█  █   █  █  █▀   ▀█ █▀█ █ █▀▀  ▀█               1   2   3   4   5   6   7   8   9  10          1   2   3   4   5   6   7   8   9  10   █
 █       █▄▌ █ █  █   █  ██ █▄▄ █▄▌ █ █ █ █   █▄▌            ┌────────────────────────────────────────┐     ┌────────────────────────────────────────┐ █
 █                                                         A │ ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐ │   A │ ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐ │ █
-█ {MessagePrepareToDisplay(messages[0], 52)          }      │ └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘ │     │ └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘ │ █
-█ {MessagePrepareToDisplay(messages[1], 52)          }    B │ ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐ │   B │ ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐ │ █
-█ {MessagePrepareToDisplay(messages[2], 52)          }      │ └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘ │     │ └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘ │ █
-█ {MessagePrepareToDisplay(messages[3], 52)          }    C │ ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐ │   C │ ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐ │ █
-█ {MessagePrepareToDisplay(messages[4], 52)          }      │ └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘ │     │ └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘ │ █
-█ {MessagePrepareToDisplay(messages[5], 52)          }    D │ ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐ │   D │ ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐ │ █
-█ {MessagePrepareToDisplay(messages[6], 52)          }      │ └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘ │     │ └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘ │ █
-█ {MessagePrepareToDisplay(messages[7], 52)          }    E │ ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐ │   E │ ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐ │ █
-█ {MessagePrepareToDisplay(messages[8], 52)          }      │ └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘ │     │ └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘ │ █
-█ {MessagePrepareToDisplay(messages[9], 52)          }    F │ ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐ │   F │ ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐ │ █
-█ {MessagePrepareToDisplay(messages[10], 52)         }      │ └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘ │     │ └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘ │ █
-█ {MessagePrepareToDisplay(messages[11], 52)         }    G │ ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐ │   G │ ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐ │ █
-█ {MessagePrepareToDisplay(messages[12], 52)         }      │ └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘ │     │ └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘ │ █
-█ {MessagePrepareToDisplay(messages[13], 52)         }    H │ ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐ │   H │ ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐ │ █
-█ {MessagePrepareToDisplay(messages[14], 52)         }      │ └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘ │     │ └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘ │ █
-█ {MessagePrepareToDisplay(messages[15], 52)         }    I │ ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐ │   I │ ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐ │ █
-█ {MessagePrepareToDisplay(messages[16], 52)         }      │ └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘ │     │ └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘ │ █
-█ {MessagePrepareToDisplay(messages[17], 52)         }    J │ ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐ │   J │ ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐ │ █
+█ {MessagePrepareToDisplay(Messages[0], 52)          }      │ └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘ │     │ └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘ │ █
+█ {MessagePrepareToDisplay(Messages[1], 52)          }    B │ ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐ │   B │ ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐ │ █
+█ {MessagePrepareToDisplay(Messages[2], 52)          }      │ └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘ │     │ └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘ │ █
+█ {MessagePrepareToDisplay(Messages[3], 52)          }    C │ ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐ │   C │ ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐ │ █
+█ {MessagePrepareToDisplay(Messages[4], 52)          }      │ └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘ │     │ └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘ │ █
+█ {MessagePrepareToDisplay(Messages[5], 52)          }    D │ ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐ │   D │ ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐ │ █
+█ {MessagePrepareToDisplay(Messages[6], 52)          }      │ └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘ │     │ └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘ │ █
+█ {MessagePrepareToDisplay(Messages[7], 52)          }    E │ ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐ │   E │ ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐ │ █
+█ {MessagePrepareToDisplay(Messages[8], 52)          }      │ └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘ │     │ └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘ │ █
+█ {MessagePrepareToDisplay(Messages[9], 52)          }    F │ ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐ │   F │ ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐ │ █
+█ {MessagePrepareToDisplay(Messages[10], 52)         }      │ └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘ │     │ └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘ │ █
+█ {MessagePrepareToDisplay(Messages[11], 52)         }    G │ ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐ │   G │ ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐ │ █
+█ {MessagePrepareToDisplay(Messages[12], 52)         }      │ └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘ │     │ └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘ │ █
+█ {MessagePrepareToDisplay(Messages[13], 52)         }    H │ ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐ │   H │ ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐ │ █
+█ {MessagePrepareToDisplay(Messages[14], 52)         }      │ └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘ │     │ └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘ │ █
+█ {MessagePrepareToDisplay(Messages[15], 52)         }    I │ ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐ │   I │ ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐ │ █
+█ {MessagePrepareToDisplay(Messages[16], 52)         }      │ └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘ │     │ └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘ │ █
+█ {MessagePrepareToDisplay(Messages[17], 52)         }    J │ ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐ │   J │ ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐  ┌┐ │ █
 █                                                           │ └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘ │     │ └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘  └┘ │ █
 █            Wpisz 'Quit' aby zakończyć grę                 └────────────────────────────────────────┘     └────────────────────────────────────────┘ █
 █                                                                                                                                                     █
