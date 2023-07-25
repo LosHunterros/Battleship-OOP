@@ -32,4 +32,9 @@
         Hit,
         Sunk,
     }
+    enum Orientation
+    {
+        Horizontal,
+        Vertical,
+    }
 }
