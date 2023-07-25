@@ -8,18 +8,18 @@ namespace Battleship
 {
     internal class Player
     {
+        public string Name { get; set; }
         public Field[,] Board = new Field[Config.BoardSize, Config.BoardSize];
         public int CrosshairY { get; private set; } = (Config.BoardSize + 1) / 2;
         public int CrosshairX { get; private set; } = (Config.BoardSize + 1) / 2;
         public Orientation Orientation { get; private set; } = Orientation.Horizontal;
+        public Player Opponent { get; set; }
+
+        public bool IsAlive => ships.Count > 0;
 
         private char[,] ownBoard = new char[Config.BoardSize, Config.BoardSize];
         private char[,] opponentBoard = new char[Config.BoardSize, Config.BoardSize];
         private List<Ship> ships = new List<Ship>();
-
-        public Player Opponent { get; set; }
-
-        public bool IsAlive => ships.Count > 0;
 
         public void PlaceShips()
         {
