@@ -8,6 +8,11 @@ namespace Battleship
 {
     internal class Player
     {
+        public Field[,] Board = new Field[Config.BoardSize, Config.BoardSize];
+        public int CrosshairY { get; private set; } = (Config.BoardSize + 1) / 2;
+        public int CrosshairX { get; private set; } = (Config.BoardSize + 1) / 2;
+        public Orientation Orientation { get; private set; } = Orientation.Horizontal;
+
         private char[,] ownBoard = new char[Config.BoardSize, Config.BoardSize];
         private char[,] opponentBoard = new char[Config.BoardSize, Config.BoardSize];
         private List<Ship> ships = new List<Ship>();
