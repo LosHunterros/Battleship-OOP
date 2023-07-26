@@ -21,6 +21,26 @@ namespace Battleship
         private char[,] opponentBoard = new char[Config.BoardSize, Config.BoardSize];
         private List<Ship> ships = new List<Ship>();
 
+        public Player(string name)
+        {
+            Name = name;
+            for (int i = 0; Config.BoardSize > i; i++)
+            {
+                for (int j = 0; Config.BoardSize > j; j++)
+                {
+                    Board[i, j] = new Field();
+                }
+            }
+        }
+
+        public void setShips()
+        {
+            for (int i = 0; Config.Ships.Length < i; i++)
+            {
+
+            }
+        }
+
         public void PlaceShips()
         {
             Console.WriteLine("Player, place your ships.");

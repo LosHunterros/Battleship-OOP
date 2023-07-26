@@ -2,8 +2,8 @@
 {
     internal class Program
     {
-        private static Player Player1 = new Player();
-        private static Player Player2 = new Player();
+        private static Player Player1 = new Player(Config.Player1Name);
+        private static Player Player2 = new Player(Config.Player2Name);
         private static Player PlayerActive;
         static void Main(string[] args)
         {
