@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,7 +12,7 @@ namespace Battleship
         private const int BoardSize = 10;
         private char[,] ownBoard = new char[BoardSize, BoardSize];
         private char[,] opponentBoard = new char[BoardSize, BoardSize];
-        private List<Ship> ships = new List<Ship>();
+        private List<Models.ShipPart> ships = new List<Models.ShipPart>();
 
         public required Player Opponent { get; set; }
 
@@ -29,6 +30,11 @@ namespace Battleship
             }
         }
 
+        private void PrintOwnBoard()
+        {
+            throw new NotImplementedException();
+        }
+
         private void PlaceShip()
         {
             int x, y;
@@ -42,7 +48,7 @@ namespace Battleship
                 Console.Write("Enter Y coordinate (0-9): ");
             } while (!int.TryParse(Console.ReadLine(), out y) || y < 0 || y >= BoardSize);
 
-            
+
             if (ownBoard[x, y] != '\0')
             {
                 Console.WriteLine("Invalid location. Try again.");
@@ -50,9 +56,8 @@ namespace Battleship
                 return;
             }
 
-            
             ownBoard[x, y] = 'S';
-            ships.Add(new Ship(x, y));
+            ships.Add(new Models.ShipPart(x, y)); // Użyj Models.ShipPart
         }
 
         public void Play()
@@ -69,7 +74,7 @@ namespace Battleship
                 Console.Write("Enter Y coordinate to fire at (0-9): ");
             } while (!int.TryParse(Console.ReadLine(), out y) || y < 0 || y >= BoardSize);
 
-            
+
             if (opponentBoard[x, y] != '\0')
             {
                 Console.WriteLine("You've already fired at this location. Try again.");
@@ -77,7 +82,7 @@ namespace Battleship
                 return;
             }
 
-            
+
             if (Opponent.ownBoard[x, y] == 'S')
             {
                 Console.WriteLine("Hit!");
@@ -102,59 +107,21 @@ namespace Battleship
 
         private void HandleHit(int x, int y)
         {
-            
-            foreach (var ship in Opponent.ships)
+            foreach (var shipPart in Opponent.ships)
             {
-                if (ship.Hit(x, y))
+                if (shipPart.Hit(x, y))
                 {
-                    Console.WriteLine("You've hit an enemy ship!");
-                    if (!ship.IsAlive)
+                    Console.WriteLine("You've hit an enemy ship part!");
+                    if (!shipPart.IsAlive())
                     {
-                        Console.WriteLine("You've sunk an enemy ship!");
-                        Opponent.ships.Remove(ship);
+                        Console.WriteLine("You've sunk an enemy ship part!");
+                        Opponent.ships.Remove(shipPart);
                     }
                     return;
                 }
             }
         }
-
-        public class Ship
-        {
-            private int x;
-            private int y;
-            private bool isAlive = true;
-
-            public Ship(int x, int y)
-            {
-                this.x = x;
-                this.y = y;
-            }
-
-            public bool Hit(int x, int y)
-            {
-                if (this.x == x && this.y == y && isAlive)
-                {
-                    isAlive = false;
-                    return true;
-                }
-                return false;
-            }
-
-            public bool IsAlive => isAlive;
-        }
-
-
-        public void PrintOwnBoard()
-        {
-            Console.WriteLine("Player's own board:");
-            for (int i = 0; i < BoardSize; i++)
-            {
-                for (int j = 0; j < BoardSize; j++)
-                {
-                    Console.Write(ownBoard[i, j] + " ");
-                }
-                Console.WriteLine();
-            }
-        }
     }
 }
+
+
