@@ -31,27 +31,27 @@ namespace Battleship
 █                                                                                                                                                     █
 █       █▀▌  █  ▀█▀ ▀█▀ █  █▀▀ ▐▀█ █ █ █ ██▄ ▐▀█                       Player 1 - Człowiek                            Player 2 - Człowiek             █
 █       █▄█ ▐ ▌  █   █  █  █   █▄  █▄█ █ █ █ █▄                                                                                                       █
-█       █ █ █▄█  █   █  █  █▀   ▀█ █▀█ █ █▀▀  ▀█                                                              1   2   3   4   5   6   7   8   9  10   █
+█       █ █ █▄█  █   █  █  █▀   ▀█ █▀█ █ █▀▀  ▀█                                                                                                      █
 █       █▄▌ █ █  █   █  ██ █▄▄ █▄▌ █ █ █ █   █▄▌            {player1Board[0]                         }     {player2Board[0]                         } █
-█                                                           {player1Board[1]                         }   A {player2Board[1]                         } █
+█                                                           {player1Board[1]                         }     {player2Board[1]                         } █
 █ {MessagePrepareToDisplay(Messages[0], 52)          }      {player1Board[2]                         }     {player2Board[2]                         } █
-█ {MessagePrepareToDisplay(Messages[1], 52)          }      {player1Board[3]                         }   B {player2Board[3]                         } █
+█ {MessagePrepareToDisplay(Messages[1], 52)          }      {player1Board[3]                         }     {player2Board[3]                         } █
 █ {MessagePrepareToDisplay(Messages[2], 52)          }      {player1Board[4]                         }     {player2Board[4]                         } █
-█ {MessagePrepareToDisplay(Messages[3], 52)          }      {player1Board[5]                         }   C {player2Board[5]                         } █
+█ {MessagePrepareToDisplay(Messages[3], 52)          }      {player1Board[5]                         }     {player2Board[5]                         } █
 █ {MessagePrepareToDisplay(Messages[4], 52)          }      {player1Board[6]                         }     {player2Board[6]                         } █
-█ {MessagePrepareToDisplay(Messages[5], 52)          }      {player1Board[7]                         }   D {player2Board[7]                         } █
+█ {MessagePrepareToDisplay(Messages[5], 52)          }      {player1Board[7]                         }     {player2Board[7]                         } █
 █ {MessagePrepareToDisplay(Messages[6], 52)          }      {player1Board[8]                         }     {player2Board[8]                         } █
-█ {MessagePrepareToDisplay(Messages[7], 52)          }      {player1Board[9]                         }   E {player2Board[9]                         } █
+█ {MessagePrepareToDisplay(Messages[7], 52)          }      {player1Board[9]                         }     {player2Board[9]                         } █
 █ {MessagePrepareToDisplay(Messages[8], 52)          }      {player1Board[10]                        }     {player2Board[10]                        } █
-█ {MessagePrepareToDisplay(Messages[9], 52)          }      {player1Board[11]                        }   F {player2Board[11]                        } █
+█ {MessagePrepareToDisplay(Messages[9], 52)          }      {player1Board[11]                        }     {player2Board[11]                        } █
 █ {MessagePrepareToDisplay(Messages[10], 52)         }      {player1Board[12]                        }     {player2Board[12]                        } █
-█ {MessagePrepareToDisplay(Messages[11], 52)         }      {player1Board[13]                        }   G {player2Board[13]                        } █
+█ {MessagePrepareToDisplay(Messages[11], 52)         }      {player1Board[13]                        }     {player2Board[13]                        } █
 █ {MessagePrepareToDisplay(Messages[12], 52)         }      {player1Board[14]                        }     {player2Board[14]                        } █
-█ {MessagePrepareToDisplay(Messages[13], 52)         }      {player1Board[15]                        }   H {player2Board[15]                        } █
+█ {MessagePrepareToDisplay(Messages[13], 52)         }      {player1Board[15]                        }     {player2Board[15]                        } █
 █ {MessagePrepareToDisplay(Messages[14], 52)         }      {player1Board[16]                        }     {player2Board[16]                        } █
-█ {MessagePrepareToDisplay(Messages[15], 52)         }      {player1Board[17]                        }   I {player2Board[17]                        } █
+█ {MessagePrepareToDisplay(Messages[15], 52)         }      {player1Board[17]                        }     {player2Board[17]                        } █
 █ {MessagePrepareToDisplay(Messages[16], 52)         }      {player1Board[18]                        }     {player2Board[18]                        } █
-█ {MessagePrepareToDisplay(Messages[17], 52)         }      {player1Board[19]                        }   J {player2Board[19]                        } █
+█ {MessagePrepareToDisplay(Messages[17], 52)         }      {player1Board[19]                        }     {player2Board[19]                        } █
 █                                                           {player1Board[20]                        }     {player2Board[20]                        } █
 █                Press 'Q' to quit game                     {player1Board[21]                        }     {player2Board[21]                        } █
 █                                                                                                                                                     █
