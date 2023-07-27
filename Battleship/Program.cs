@@ -28,6 +28,7 @@
     enum ShipState
     {
         Temporary,
+        Collision,
         Ok,
         Hit,
         Sunk,
