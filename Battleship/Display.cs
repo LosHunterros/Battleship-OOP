@@ -10,18 +10,14 @@ namespace Battleship
     {
         public static Player Player1 { get; set; }
         public static Player Player2 { get; set; }
+        public static Player PlayerActive { get; set; }
         static int Crosshair_x = 0;
         static int Crosshair_y = 0;
         public static string[] Messages = new string[18];
-        public static void Write(Player playerActive)
+        public static void Write()
         {
+            Console.Clear();
             Console.OutputEncoding = System.Text.Encoding.Unicode;
-
-            Player1.Board[2, 2].ShipPart = new ShipPart();
-            Player1.Board[2, 3].ShipPart = new ShipPart();
-
-            Player2.Board[4, 6].ShipPart = new ShipPart();
-            Player2.Board[5, 6].ShipPart = new ShipPart();
 
             string[] player1Board = getPlayersBoard(Player1);
             string[] player2Board = getPlayersBoard(Player2);
@@ -29,29 +25,29 @@ namespace Battleship
             string program = @$"
 ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 █                                                                                                                                                     █
-█       █▀▌  █  ▀█▀ ▀█▀ █  █▀▀ ▐▀█ █ █ █ ██▄ ▐▀█                       Player 1 - Człowiek                            Player 2 - Człowiek             █
+█       █▀▌  █  ▀█▀ ▀█▀ █  █▀▀ ▐▀█ █ █ █ ██▄ ▐▀█            {MessagePrepToDisplay(Player1.Name, 42)  }     {MessagePrepToDisplay(Player2.Name, 42)  } █
 █       █▄█ ▐ ▌  █   █  █  █   █▄  █▄█ █ █ █ █▄                                                                                                       █
 █       █ █ █▄█  █   █  █  █▀   ▀█ █▀█ █ █▀▀  ▀█                                                                                                      █
 █       █▄▌ █ █  █   █  ██ █▄▄ █▄▌ █ █ █ █   █▄▌            {player1Board[0]                         }     {player2Board[0]                         } █
 █                                                           {player1Board[1]                         }     {player2Board[1]                         } █
-█ {MessagePrepareToDisplay(Messages[0], 52)          }      {player1Board[2]                         }     {player2Board[2]                         } █
-█ {MessagePrepareToDisplay(Messages[1], 52)          }      {player1Board[3]                         }     {player2Board[3]                         } █
-█ {MessagePrepareToDisplay(Messages[2], 52)          }      {player1Board[4]                         }     {player2Board[4]                         } █
-█ {MessagePrepareToDisplay(Messages[3], 52)          }      {player1Board[5]                         }     {player2Board[5]                         } █
-█ {MessagePrepareToDisplay(Messages[4], 52)          }      {player1Board[6]                         }     {player2Board[6]                         } █
-█ {MessagePrepareToDisplay(Messages[5], 52)          }      {player1Board[7]                         }     {player2Board[7]                         } █
-█ {MessagePrepareToDisplay(Messages[6], 52)          }      {player1Board[8]                         }     {player2Board[8]                         } █
-█ {MessagePrepareToDisplay(Messages[7], 52)          }      {player1Board[9]                         }     {player2Board[9]                         } █
-█ {MessagePrepareToDisplay(Messages[8], 52)          }      {player1Board[10]                        }     {player2Board[10]                        } █
-█ {MessagePrepareToDisplay(Messages[9], 52)          }      {player1Board[11]                        }     {player2Board[11]                        } █
-█ {MessagePrepareToDisplay(Messages[10], 52)         }      {player1Board[12]                        }     {player2Board[12]                        } █
-█ {MessagePrepareToDisplay(Messages[11], 52)         }      {player1Board[13]                        }     {player2Board[13]                        } █
-█ {MessagePrepareToDisplay(Messages[12], 52)         }      {player1Board[14]                        }     {player2Board[14]                        } █
-█ {MessagePrepareToDisplay(Messages[13], 52)         }      {player1Board[15]                        }     {player2Board[15]                        } █
-█ {MessagePrepareToDisplay(Messages[14], 52)         }      {player1Board[16]                        }     {player2Board[16]                        } █
-█ {MessagePrepareToDisplay(Messages[15], 52)         }      {player1Board[17]                        }     {player2Board[17]                        } █
-█ {MessagePrepareToDisplay(Messages[16], 52)         }      {player1Board[18]                        }     {player2Board[18]                        } █
-█ {MessagePrepareToDisplay(Messages[17], 52)         }      {player1Board[19]                        }     {player2Board[19]                        } █
+█ {MessagePrepToDisplay(Messages[0], 52)             }      {player1Board[2]                         }     {player2Board[2]                         } █
+█ {MessagePrepToDisplay(Messages[1], 52)             }      {player1Board[3]                         }     {player2Board[3]                         } █
+█ {MessagePrepToDisplay(Messages[2], 52)             }      {player1Board[4]                         }     {player2Board[4]                         } █
+█ {MessagePrepToDisplay(Messages[3], 52)             }      {player1Board[5]                         }     {player2Board[5]                         } █
+█ {MessagePrepToDisplay(Messages[4], 52)             }      {player1Board[6]                         }     {player2Board[6]                         } █
+█ {MessagePrepToDisplay(Messages[5], 52)             }      {player1Board[7]                         }     {player2Board[7]                         } █
+█ {MessagePrepToDisplay(Messages[6], 52)             }      {player1Board[8]                         }     {player2Board[8]                         } █
+█ {MessagePrepToDisplay(Messages[7], 52)             }      {player1Board[9]                         }     {player2Board[9]                         } █
+█ {MessagePrepToDisplay(Messages[8], 52)             }      {player1Board[10]                        }     {player2Board[10]                        } █
+█ {MessagePrepToDisplay(Messages[9], 52)             }      {player1Board[11]                        }     {player2Board[11]                        } █
+█ {MessagePrepToDisplay(Messages[10], 52)            }      {player1Board[12]                        }     {player2Board[12]                        } █
+█ {MessagePrepToDisplay(Messages[11], 52)            }      {player1Board[13]                        }     {player2Board[13]                        } █
+█ {MessagePrepToDisplay(Messages[12], 52)            }      {player1Board[14]                        }     {player2Board[14]                        } █
+█ {MessagePrepToDisplay(Messages[13], 52)            }      {player1Board[15]                        }     {player2Board[15]                        } █
+█ {MessagePrepToDisplay(Messages[14], 52)            }      {player1Board[16]                        }     {player2Board[16]                        } █
+█ {MessagePrepToDisplay(Messages[15], 52)            }      {player1Board[17]                        }     {player2Board[17]                        } █
+█ {MessagePrepToDisplay(Messages[16], 52)            }      {player1Board[18]                        }     {player2Board[18]                        } █
+█ {MessagePrepToDisplay(Messages[17], 52)            }      {player1Board[19]                        }     {player2Board[19]                        } █
 █                                                           {player1Board[20]                        }     {player2Board[20]                        } █
 █                Press 'Q' to quit game                     {player1Board[21]                        }     {player2Board[21]                        } █
 █                                                                                                                                                     █
@@ -70,25 +66,13 @@ namespace Battleship
 
             ConsoleKey userKey;
 
-            while (true)
+            while (false)
             {
                 userKey = Console.ReadKey().Key;
 
-                switch (userKey)
-                {
-                    case ConsoleKey.LeftArrow:
-                        Crosshair_x -= 1;
-                        break;
-                    case ConsoleKey.RightArrow:
-                        Crosshair_x += 1;
-                        break;
-                    case ConsoleKey.UpArrow:
-                        Crosshair_y -= 1;
-                        break;
-                    case ConsoleKey.DownArrow:
-                        Crosshair_y += 1;
-                        break;
-                }
+                
+
+
 
                 for (int i = 0; i < colors.Length; i++) colors[i] = ConsoleColor.White;
 
@@ -124,7 +108,7 @@ namespace Battleship
 
             }
         }
-        private static string MessagePrepareToDisplay(string message, int length, TextAlign align = TextAlign.Center)
+        private static string MessagePrepToDisplay(string message, int length, TextAlign align = TextAlign.Center)
         {
             if (message == null) message = "";
             switch (align)
@@ -150,24 +134,29 @@ namespace Battleship
 
                 for (int j = 0; j < Config.BoardSize; j++)
                 {
-                    playersBoard[i * 2 + Config.paddingTop() + 1] += player.Board[i, j];
-                    playersBoard[i * 2 + Config.paddingTop() + 2] += player.Board[i, j];
+                    playersBoard[i * 2 + Config.paddingTop() + 1] += player.BoardToDisplay[i, j];
+                    playersBoard[i * 2 + Config.paddingTop() + 2] += player.BoardToDisplay[i, j];
                 }
 
                 playersBoard[i * 2 + Config.paddingTop() + 1] += "│";
                 playersBoard[i * 2 + Config.paddingTop() + 2] += "│";
 
-                playersBoard[i * 2 + Config.paddingTop() + 1] = MessagePrepareToDisplay(playersBoard[i * 2 + Config.paddingTop() + 1], lineWidth);
-                playersBoard[i * 2 + Config.paddingTop() + 2] = MessagePrepareToDisplay(playersBoard[i * 2 + Config.paddingTop() + 2], lineWidth);
+                playersBoard[i * 2 + Config.paddingTop() + 1] = MessagePrepToDisplay(playersBoard[i * 2 + Config.paddingTop() + 1], lineWidth);
+                playersBoard[i * 2 + Config.paddingTop() + 2] = MessagePrepToDisplay(playersBoard[i * 2 + Config.paddingTop() + 2], lineWidth);
             }
 
             playersBoard[Config.paddingTop()] = "┌" + String.Concat(Enumerable.Repeat("─", Config.BoardSize * 4)) + "┐";
 
             playersBoard[Config.paddingTop() + Config.BoardSize * 2 + 1] = "└" + String.Concat(Enumerable.Repeat("─", Config.BoardSize * 4)) + "┘";
 
-            for (int i = 0; i < playersBoard.Length; i++) playersBoard[i] = MessagePrepareToDisplay(playersBoard[i], lineWidth);
+            for (int i = 0; i < playersBoard.Length; i++) playersBoard[i] = MessagePrepToDisplay(playersBoard[i], lineWidth);
 
             return playersBoard;
+        }
+
+        public static void ClearMessages()
+        {
+            Messages = new string[18];
         }
     }
 }

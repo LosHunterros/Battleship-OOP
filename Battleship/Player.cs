@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,174 +10,209 @@ namespace Battleship
     {
         public string Name { get; set; }
         public Field[,] Board = new Field[Config.BoardSize, Config.BoardSize];
-        public int CrosshairY { get; private set; } = (Config.BoardSize + 1) / 2;
-        public int CrosshairX { get; private set; } = (Config.BoardSize + 1) / 2;
+        public Field[,] BoardToDisplay = new Field[Config.BoardSize, Config.BoardSize];
+        public int CrosshairY { get; private set; } = (Config.BoardSize - 1) / 2;
+        public int CrosshairX { get; private set; } = (Config.BoardSize - 1) / 2;
         public Orientation Orientation { get; private set; } = Orientation.Horizontal;
         public Player Opponent { get; set; }
+        private List<Ship> Ships = new List<Ship>();
 
-        public bool IsAlive => ships.Count > 0;
-
-        private char[,] ownBoard = new char[Config.BoardSize, Config.BoardSize];
-        private char[,] opponentBoard = new char[Config.BoardSize, Config.BoardSize];
-        private List<Ship> ships = new List<Ship>();
+        public bool IsAlive => Ships.Count > 0;
 
         public Player(string name)
         {
             Name = name;
+            Board = GetEmptyBoard();
+            BoardToDisplay = GetEmptyBoard();
+        }
+
+        public void SetShips()
+        {
+            bool isShipAdded;
+            Ship shipToAdd;
+            ConsoleKey userKey;
+
+            Display.ClearMessages();
+            Display.Messages[4] = $"{Name} set up Your ships".ToUpper();
+            Display.Messages[8] = "↑↓←→: Move ship";
+            Display.Messages[10] = "Tab: Switch ship orientation (horizontal/vertical)";
+            Display.Messages[12] = "Enter: Confirm ship location";
+
+            for (int i = 0; Config.Ships.Length > i; i++)
+            {
+                isShipAdded = false;
+                CenterCrosshair();
+
+                do
+                {
+                    ValidateCrosshair(Config.Ships[i]);
+                    shipToAdd = GetNewShip(Config.Ships[i]);
+                    CheckCollision(shipToAdd);
+                    BoardToDisplay = CloneBoard(Board);
+                    BoardToDisplay = AddShipToBoard(BoardToDisplay, shipToAdd);
+
+                    Display.Write();
+
+                    userKey = Console.ReadKey().Key;
+
+                    UserKeyPressHandle(userKey);
+
+                    if( userKey == ConsoleKey.Enter )
+                    {
+                        isShipAdded = AddShipToPlayer(shipToAdd);
+                    }
+
+                }
+                while (!isShipAdded);
+            }
+        }
+
+        private Ship GetNewShip(int shipLength)
+        {
+            Ship ship = new Ship();
+            int coordinatesY = CrosshairY;
+            int coordinatesX = CrosshairX;
+            for (var i = 0; i < shipLength; i++)
+            {
+                ship.AddShipPart(coordinatesY, coordinatesX);
+                if (Orientation == Orientation.Horizontal) coordinatesX++;
+                else coordinatesY++;
+            }
+            return ship;
+        }
+
+        private Field[,] GetEmptyBoard()
+        {
+            Field[,] board = new Field[Config.BoardSize, Config.BoardSize];
             for (int i = 0; Config.BoardSize > i; i++)
             {
                 for (int j = 0; Config.BoardSize > j; j++)
                 {
-                    Board[i, j] = new Field();
+                    board[i, j] = new Field();
                 }
             }
+            return board;
         }
 
-        public void setShips()
+        private Field[,] CloneBoard(Field[,] board)
         {
-            for (int i = 0; Config.Ships.Length < i; i++)
+            Field[,] boardNew = new Field[Config.BoardSize, Config.BoardSize];
+            boardNew = GetEmptyBoard();
+            for (int i = 0; i < board.GetLength(0); i++)
             {
-
-            }
-        }
-
-        public void PlaceShips()
-        {
-            Console.WriteLine("Player, place your ships.");
-            for (int shipNumber = 1; shipNumber <= 4; shipNumber++)
-            {
-                Console.Write($"Placing ship {shipNumber}: ");
-                PlaceShip();
-                Console.WriteLine();
-                PrintOwnBoard();
-            }
-        }
-
-        private void PlaceShip()
-        {
-            int x, y;
-            do
-            {
-                Console.Write("Enter X coordinate (0-9): ");
-            } while (!int.TryParse(Console.ReadLine(), out x) || x < 0 || x >= Config.BoardSize);
-
-            do
-            {
-                Console.Write("Enter Y coordinate (0-9): ");
-            } while (!int.TryParse(Console.ReadLine(), out y) || y < 0 || y >= Config.BoardSize);
-
-            
-            if (ownBoard[x, y] != '\0')
-            {
-                Console.WriteLine("Invalid location. Try again.");
-                PlaceShip();
-                return;
-            }
-
-            
-            ownBoard[x, y] = 'S';
-            ships.Add(new Ship(x, y));
-        }
-
-        public void Play()
-        {
-            Console.WriteLine("Player, it's your turn.");
-            int x, y;
-            do
-            {
-                Console.Write("Enter X coordinate to fire at (0-9): ");
-            } while (!int.TryParse(Console.ReadLine(), out x) || x < 0 || x >= Config.BoardSize);
-
-            do
-            {
-                Console.Write("Enter Y coordinate to fire at (0-9): ");
-            } while (!int.TryParse(Console.ReadLine(), out y) || y < 0 || y >= Config.BoardSize);
-
-            
-            if (opponentBoard[x, y] != '\0')
-            {
-                Console.WriteLine("You've already fired at this location. Try again.");
-                Play();
-                return;
-            }
-
-            
-            if (Opponent.ownBoard[x, y] == 'S')
-            {
-                Console.WriteLine("Hit!");
-                opponentBoard[x, y] = 'X';
-                Opponent.ownBoard[x, y] = 'X';
-                HandleHit(x, y);
-            }
-            else
-            {
-                Console.WriteLine("Miss!");
-                opponentBoard[x, y] = 'O';
-            }
-
-            Opponent.PrintOwnBoard();
-
-            if (!Opponent.IsAlive)
-            {
-                Console.WriteLine("Congratulations! You've won!");
-                Environment.Exit(0);
-            }
-        }
-
-        private void HandleHit(int x, int y)
-        {
-            
-            foreach (var ship in Opponent.ships)
-            {
-                if (ship.Hit(x, y))
+                for (int j = 0; j < board.GetLength(1); j++)
                 {
-                    Console.WriteLine("You've hit an enemy ship!");
-                    if (!ship.IsAlive)
-                    {
-                        Console.WriteLine("You've sunk an enemy ship!");
-                        Opponent.ships.Remove(ship);
-                    }
-                    return;
+                    boardNew[i,j] = board[i,j].Clone();
                 }
             }
+            return boardNew;
         }
 
-        public class Ship
+        private Field[,] AddShipToBoard(Field[,] board, Ship ship)
         {
-            private int x;
-            private int y;
-            private bool isAlive = true;
-
-            public Ship(int x, int y)
+            for (int i = 0; i < ship.Parts.Count; i++)
             {
-                this.x = x;
-                this.y = y;
+                board[ship.Parts[i].CoordinatesY, ship.Parts[i].CoordinatesX].ShipPart = ship.Parts[i];
             }
-
-            public bool Hit(int x, int y)
-            {
-                if (this.x == x && this.y == y && isAlive)
-                {
-                    isAlive = false;
-                    return true;
-                }
-                return false;
-            }
-
-            public bool IsAlive => isAlive;
+            return board;
         }
 
-
-        public void PrintOwnBoard()
+        private bool AddShipToPlayer(Ship ship)
         {
-            Console.WriteLine("Player's own board:");
-            for (int i = 0; i < Config.BoardSize; i++)
+            if (ship.State != ShipState.Collision)
             {
-                for (int j = 0; j < Config.BoardSize; j++)
+                ship.State = ShipState.Ok;
+                Ships.Add(ship);
+                for (int i = 0; i < ship.Parts.Count; i++)
                 {
-                    Console.Write(ownBoard[i, j] + " ");
+                    Board[ship.Parts[i].CoordinatesY, ship.Parts[i].CoordinatesX].ShipPart = ship.Parts[i];
+                    ship.Parts[i].State = ShipState.Ok;
                 }
-                Console.WriteLine();
+                return true;
+            }
+
+            return false;
+        }
+
+        private void UserKeyPressHandle(ConsoleKey userKey)
+        {
+            switch (userKey)
+            {
+                case ConsoleKey.LeftArrow:
+                    if (CrosshairX - 1 >= 0 ) CrosshairX -= 1;
+                    break;
+                case ConsoleKey.RightArrow:
+                    if (CrosshairX + 1 < Config.BoardSize) CrosshairX += 1;
+                    break;
+                case ConsoleKey.UpArrow:
+                    if (CrosshairY - 1 >= 0) CrosshairY -= 1;
+                    break;
+                case ConsoleKey.DownArrow:
+                    if (CrosshairY + 1 < Config.BoardSize) CrosshairY += 1;
+                    break;
+                case ConsoleKey.Tab:
+                    if (Orientation == Orientation.Horizontal) Orientation = Orientation.Vertical;
+                    else Orientation = Orientation.Horizontal;
+                    break;
+            }
+        }
+        private void CenterCrosshair()
+        {
+        CrosshairY = (Config.BoardSize - 1) / 2;
+        CrosshairX = (Config.BoardSize - 1) / 2;
+        }
+
+        private void ValidateCrosshair(int shipLength = 0)
+        {
+            if (Orientation == Orientation.Horizontal && CrosshairX + shipLength > Config.BoardSize) CrosshairX = Config.BoardSize - shipLength;
+            if (Orientation == Orientation.Vertical && CrosshairY + shipLength > Config.BoardSize) CrosshairY = Config.BoardSize - shipLength;
+        }
+
+        private void CheckCollision(Ship ship)
+        {
+            for (int i = 0; i < ship.Parts.Count; i++)
+            {
+                if (Board[ship.Parts[i].CoordinatesY, ship.Parts[i].CoordinatesX].ShipPart != null)
+                {
+                    ship.State = ShipState.Collision;
+                    ship.Parts[i].State = ShipState.Collision;
+                }
+                else if (
+                    ship.Parts[i].CoordinatesY + 1 < Config.BoardSize
+                    &&
+                    Board[ship.Parts[i].CoordinatesY + 1, ship.Parts[i].CoordinatesX].ShipPart != null
+                    )
+                {
+                    ship.State = ShipState.Collision;
+                    ship.Parts[i].State = ShipState.Collision;
+                }
+                else if (
+                    ship.Parts[i].CoordinatesY - 1 >= 0
+                    &&
+                    Board[ship.Parts[i].CoordinatesY - 1, ship.Parts[i].CoordinatesX].ShipPart != null
+                    )
+                {
+                    ship.State = ShipState.Collision;
+                    ship.Parts[i].State = ShipState.Collision;
+                }
+                else if (
+                    ship.Parts[i].CoordinatesX + 1 < Config.BoardSize
+                    &&
+                    Board[ship.Parts[i].CoordinatesY, ship.Parts[i].CoordinatesX + 1].ShipPart != null
+                    )
+                {
+                    ship.State = ShipState.Collision;
+                    ship.Parts[i].State = ShipState.Collision;
+                }
+                else if (
+                    ship.Parts[i].CoordinatesX - 1 >= 0
+                    &&
+                    Board[ship.Parts[i].CoordinatesY, ship.Parts[i].CoordinatesX - 1].ShipPart != null
+                    )
+                {
+                    ship.State = ShipState.Collision;
+                    ship.Parts[i].State = ShipState.Collision;
+                }
             }
         }
     }

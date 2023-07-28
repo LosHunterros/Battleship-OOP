@@ -13,9 +13,10 @@
 
             Display.Player1 = Player1;
             Display.Player2 = Player2;
+            Display.PlayerActive = PlayerActive;
 
-            Display.Messages[0] = "Welcome to Battleships";
-            Display.Write(PlayerActive);
+            Player1.SetShips();
+            Player2.SetShips();
         }
     }
 

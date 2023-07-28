@@ -21,6 +21,11 @@ namespace Battleship
                 if (Counter % 2 == 0) fieldLine = " ┌┐ ";
                 else fieldLine = " └┘ ";
             }
+            else if (ShipPart.State == ShipState.Ok || ShipPart.State == ShipState.Temporary || ShipPart.State == ShipState.Collision)
+            {
+                if (Counter % 2 == 0) fieldLine = "████";
+                else fieldLine = "████";
+            }
             else
             {
                 if (Counter % 2 == 0) fieldLine = "█▀▀█";
@@ -28,6 +33,14 @@ namespace Battleship
             }
             Counter++;
             return fieldLine;
+        }
+
+        public Field Clone()
+        {
+            Field field = new Field();
+            field.IsHited = this.IsHited;
+            field.ShipPart = this.ShipPart;
+            return field;
         }
     }
 }
