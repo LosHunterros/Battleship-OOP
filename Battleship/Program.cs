@@ -2,8 +2,8 @@
 {
     internal class Program
     {
-        private static Player Player1 = new Player(Config.Player1Name);
-        private static Player Player2 = new Player(Config.Player2Name);
+        private static Player Player1 = new Player(Config.Player1Name, Config.marginLeftPlayer1);
+        private static Player Player2 = new Player(Config.Player2Name, Config.marginLeftPlayer2);
         private static Player PlayerActive;
         static void Main(string[] args)
         {
@@ -15,8 +15,16 @@
             Display.Player2 = Player2;
             Display.PlayerActive = PlayerActive;
 
-            Player1.SetShips();
-            Player2.SetShips();
+            PlayerActive.SetShips();
+            SwitchPlayer();
+            PlayerActive.SetShips();
+            SwitchPlayer();
+        }
+
+        static void SwitchPlayer()
+        {
+            PlayerActive = PlayerActive.Opponent;
+            Display.PlayerActive = PlayerActive;
         }
     }
 

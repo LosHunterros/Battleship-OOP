@@ -17,13 +17,18 @@ namespace Battleship
         public Player Opponent { get; set; }
         private List<Ship> Ships = new List<Ship>();
 
+        public int MarginLeft { get; private set; }
+        public int OffsetLeft { get; private set; }
+
         public bool IsAlive => Ships.Count > 0;
 
-        public Player(string name)
+        public Player(string name, int marginLeft)
         {
             Name = name;
             Board = GetEmptyBoard();
             BoardToDisplay = GetEmptyBoard();
+            MarginLeft = marginLeft;
+            OffsetLeft = marginLeft + Config.paddingLeft();
         }
 
         public void SetShips()

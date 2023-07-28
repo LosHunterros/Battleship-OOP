@@ -54,58 +54,34 @@ namespace Battleship
 ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
 ";
             ConsoleColor[] colors = Enumerable.Repeat(ConsoleColor.White, program.Length).ToArray();
-            colors[0 + 2 + (153 * (6 + (Crosshair_y * 2))) + (63 - 1) + (Crosshair_x * 4)] = ConsoleColor.Red;
-            colors[0 + 2 + (153 * (6 + (Crosshair_y * 2))) + (64 - 1) + (Crosshair_x * 4)] = ConsoleColor.Red;
-            colors[0 + 2 + (153 * (7 + (Crosshair_y * 2))) + (63 - 1) + (Crosshair_x * 4)] = ConsoleColor.Red;
-            colors[0 + 2 + (153 * (7 + (Crosshair_y * 2))) + (64 - 1) + (Crosshair_x * 4)] = ConsoleColor.Red;
+
+            if (false) colors = AddColorToField(colors, PlayerActive.CrosshairY, PlayerActive.CrosshairX, ConsoleColor.Red, PlayerActive);
+
+            colors = AddColorToShipState(colors, PlayerActive, ShipState.Temporary, ConsoleColor.DarkGray);
+            colors = AddColorToShipState(colors, PlayerActive, ShipState.Collision, ConsoleColor.Red);
+                    
+            List<string> displayPart = new List<string>();
+            List<ConsoleColor> displayPartColor = new List<ConsoleColor>();
+
+            displayPart.Add("");
+            displayPartColor.Add(colors[0]);
+
+            int j = 0;
             for (int i = 0; i < program.Length; i++)
             {
-                if (i > 0 && colors[i] != colors[i - 1]) Console.ForegroundColor = colors[i];
-                Console.Write(program[i]);
+                if (i > 0 && colors[i] != colors[i - 1])
+                {
+                    j++;
+                    displayPart.Add("");
+                    displayPartColor.Add(colors[i]);
+                }
+                displayPart[j] += program[i];
             }
 
-            ConsoleKey userKey;
-
-            while (false)
+            for (int i = 0; i < displayPart.Count; i++)
             {
-                userKey = Console.ReadKey().Key;
-
-                
-
-
-
-                for (int i = 0; i < colors.Length; i++) colors[i] = ConsoleColor.White;
-
-                colors[0 + 2 + (153 * (6 + (Crosshair_y * 2))) + (63 - 1) + (Crosshair_x * 4)] = ConsoleColor.Red;
-                colors[0 + 2 + (153 * (6 + (Crosshair_y * 2))) + (64 - 1) + (Crosshair_x * 4)] = ConsoleColor.Red;
-                colors[0 + 2 + (153 * (7 + (Crosshair_y * 2))) + (63 - 1) + (Crosshair_x * 4)] = ConsoleColor.Red;
-                colors[0 + 2 + (153 * (7 + (Crosshair_y * 2))) + (64 - 1) + (Crosshair_x * 4)] = ConsoleColor.Red;
-                    
-                List<string> displayPart = new List<string>();
-                List<ConsoleColor> displayPartColor = new List<ConsoleColor>();
-
-                displayPart.Add("");
-                displayPartColor.Add(colors[0]);
-
-                Console.Clear();
-                int j = 0;
-                for (int i = 0; i < program.Length; i++)
-                {
-                    if (i > 0 && colors[i] != colors[i - 1])
-                    {
-                        j++;
-                        displayPart.Add("");
-                        displayPartColor.Add(colors[i]);
-                    }
-                    displayPart[j] += program[i];
-                }
-
-                for (int i = 0; i < displayPart.Count; i++)
-                {
-                    Console.ForegroundColor = displayPartColor[i];
-                    Console.Write(displayPart[i]);
-                }
-
+                Console.ForegroundColor = displayPartColor[i];
+                Console.Write(displayPart[i]);
             }
         }
         private static string MessagePrepToDisplay(string message, int length, TextAlign align = TextAlign.Center)
@@ -157,6 +133,33 @@ namespace Battleship
         public static void ClearMessages()
         {
             Messages = new string[18];
+        }
+
+        private static ConsoleColor[] AddColorToField(ConsoleColor[] colors, int coordinatesY, int coordinatesX, ConsoleColor color, Player player)
+        {
+            int firstChar = 2 + ((Config.lineWidth + 2) * (6 + (coordinatesY * 2))) + player.OffsetLeft + (coordinatesX * 4);
+            colors[firstChar] = color;
+            colors[firstChar + 1] = color;
+            colors[firstChar + 2] = color;
+            colors[firstChar + 3] = color;
+            colors[firstChar + Config.lineWidth + 2] = color;
+            colors[firstChar + Config.lineWidth + 2 + 1] = color;
+            colors[firstChar + Config.lineWidth + 2 + 2] = color;
+            colors[firstChar + Config.lineWidth + 2 + 3] = color;
+            return colors;
+        }
+
+        private static ConsoleColor[] AddColorToShipState(ConsoleColor[] colors, Player player, ShipState shipState, ConsoleColor color)
+        {
+            for (int i = 0; i < player.BoardToDisplay.GetLength(0); i++)
+            {
+                for (int j = 0; j < player.BoardToDisplay.GetLength(1); j++)
+                {
+                    if (player.BoardToDisplay[i, j].ShipPart != null && player.BoardToDisplay[i, j].ShipPart.State == shipState)
+                        AddColorToField(colors, i, j, color, player);
+                }
+            }
+            return colors;
         }
     }
 }
