@@ -55,11 +55,13 @@ namespace Battleship
 ";
             ConsoleColor[] colors = Enumerable.Repeat(ConsoleColor.White, program.Length).ToArray();
 
-            if (false) colors = AddColorToField(colors, PlayerActive.CrosshairY, PlayerActive.CrosshairX, ConsoleColor.Red, PlayerActive);
-
             colors = AddColorToShipState(colors, PlayerActive, ShipState.Temporary, ConsoleColor.DarkGray);
             colors = AddColorToShipState(colors, PlayerActive, ShipState.Collision, ConsoleColor.Red);
-                    
+            colors = AddColorToShipState(colors, Player1, ShipState.Sunk, ConsoleColor.DarkBlue);
+            colors = AddColorToShipState(colors, Player2, ShipState.Sunk, ConsoleColor.DarkBlue);
+
+            if (PlayerActive.ShowCrosshair) colors = AddColorToField(colors, PlayerActive.CrosshairY, PlayerActive.CrosshairX, ConsoleColor.Red, PlayerActive.Opponent);
+
             List<string> displayPart = new List<string>();
             List<ConsoleColor> displayPartColor = new List<ConsoleColor>();
 

@@ -16,5 +16,20 @@ namespace Battleship
             Parts.Add(new ShipPart(this, coordinatesY, coordinatesX));
         }
 
+        public void Hit()
+        {
+            State = ShipState.Hit;
+            bool isSunk = true;
+            foreach (var part in Parts)
+            {
+                if (part.State == ShipState.Ok) isSunk = false;
+            }
+            if (isSunk)
+            {
+                State = ShipState.Sunk;
+                foreach (var part in Parts) part.State = ShipState.Sunk;
+            }
+        }
+
     }
 }

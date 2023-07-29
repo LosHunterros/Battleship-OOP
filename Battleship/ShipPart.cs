@@ -19,5 +19,11 @@ namespace Battleship
             CoordinatesY = coordinatesY;
             CoordinatesX = coordinatesX;
         }
+
+        public void Hit()
+        {
+            State = ShipState.Hit;
+            Ship.Hit();
+        }
     }
 }

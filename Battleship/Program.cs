@@ -1,4 +1,6 @@
-﻿namespace Battleship
+﻿using System.Xml.Linq;
+
+namespace Battleship
 {
     internal class Program
     {
@@ -19,6 +21,18 @@
             SwitchPlayer();
             PlayerActive.SetShips();
             SwitchPlayer();
+
+            while (PlayerActive.Opponent.IsAlive())
+            {
+                PlayerActive.MakeMove();
+
+                if (PlayerActive.Opponent.IsAlive()) SwitchPlayer();
+            }
+
+            Display.ClearMessages();
+            Display.Messages[8] = $"Congratulations {PlayerActive.Name}!".ToUpper();
+            Display.Messages[10] = "You WON!";
+            Display.Write();
         }
 
         static void SwitchPlayer()

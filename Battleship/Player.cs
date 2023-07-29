@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,7 +21,8 @@ namespace Battleship
         public int MarginLeft { get; private set; }
         public int OffsetLeft { get; private set; }
 
-        public bool IsAlive => Ships.Count > 0;
+        public bool ShowShips = true;
+        public bool ShowCrosshair = false;
 
         public Player(string name, int marginLeft)
         {
@@ -70,6 +72,36 @@ namespace Battleship
                 }
                 while (!isShipAdded);
             }
+            ShowShips = false;
+            ShowCrosshair = true;
+            CenterCrosshair();
+        }
+
+        public void MakeMove()
+        {
+            bool isMoveDone = false;
+            ConsoleKey userKey;
+
+            Display.ClearMessages();
+            Display.Messages[4] = $"{Name} make a shot".ToUpper();
+            Display.Messages[8] = "↑↓←→: Move crosshair";
+            Display.Messages[10] = "Enter: shoot!";
+
+            do
+            {
+                Display.Write();
+
+                userKey = Console.ReadKey().Key;
+
+                UserKeyPressHandle(userKey);
+
+                if (userKey == ConsoleKey.Enter)
+                {
+                    isMoveDone = MakeShot();
+                }
+
+            }
+            while (!isMoveDone);
         }
 
         private Ship GetNewShip(int shipLength)
@@ -93,7 +125,7 @@ namespace Battleship
             {
                 for (int j = 0; Config.BoardSize > j; j++)
                 {
-                    board[i, j] = new Field();
+                    board[i, j] = new Field(this);
                 }
             }
             return board;
@@ -136,6 +168,25 @@ namespace Battleship
                 return true;
             }
 
+            return false;
+        }
+
+        private bool MakeShot()
+        {
+            if (Opponent.BoardToDisplay[CrosshairY, CrosshairX].IsHited) return false;
+            else
+            {
+                Opponent.BoardToDisplay[CrosshairY, CrosshairX].Hit();
+                return true;
+            }
+        }
+
+        public bool IsAlive()
+        {
+            foreach (var ship in Ships)
+            {
+                if (ship.State != ShipState.Sunk) return true;
+            }
             return false;
         }
 
