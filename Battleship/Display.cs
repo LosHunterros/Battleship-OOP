@@ -11,8 +11,6 @@ namespace Battleship
         public static Player Player1 { get; set; }
         public static Player Player2 { get; set; }
         public static Player PlayerActive { get; set; }
-        static int Crosshair_x = 0;
-        static int Crosshair_y = 0;
         public static string[] Messages = new string[18];
         public static void Write()
         {
