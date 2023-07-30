@@ -25,7 +25,6 @@ namespace Battleship
             while (PlayerActive.Opponent.IsAlive())
             {
                 PlayerActive.MakeMove();
-
                 if (PlayerActive.Opponent.IsAlive()) SwitchPlayer();
             }
 
